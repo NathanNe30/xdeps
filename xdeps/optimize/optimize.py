@@ -403,7 +403,7 @@ class Optimize:
                  solver=None,
                  verbose=False, assert_within_tol=True,
                  n_steps_max=20,
-                 solver_options={},
+                 solver_options=None,
                  show_call_counter=True,
                  **kwargs):
 
@@ -432,6 +432,7 @@ class Optimize:
             Options to pass to the solver. Defaults to {}.
 
         """
+        solver_options = {} if solver_options is None else solver_options
 
         if isinstance(vary, (str, Vary)):
             vary = [vary]
@@ -986,10 +987,12 @@ class Optimize:
     def _extract_knob_values(self):
         return self._err._extract_knob_values()
 
-def _bool_array_to_string(arr, dct={True: 'y', False: 'n'}):
+def _bool_array_to_string(arr, dct=None):
+    dct = {True: 'y', False: 'n'} if dct is None else dct
     return ''.join([dct[aa] for aa in arr])
 
-def _bool_array_from_string(strng, dct={'y': True, 'n': False}):
+def _bool_array_from_string(strng, dct=None):
+    dct = {'y': True, 'n': False} if dct is None else dct
     for ss in strng:
         assert ss in dct, f'Invalid character {ss}'
     return np.array([dct[ss] for ss in strng])
