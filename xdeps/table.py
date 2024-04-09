@@ -55,7 +55,7 @@ def _to_str(arr, digits, fixed="g", max_len=None):
         out = np.array(lengths)
     else:
         # Any other flat array: stringify.
-        out = arr.astype(f'U')
+        out = arr.astype('U')
 
     if max_len is not None:
         old_out = out.copy()
